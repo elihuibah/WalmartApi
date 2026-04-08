@@ -1,8 +1,10 @@
 package com.walmartapi.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "products")
 public class ProductEntity {
     @Id

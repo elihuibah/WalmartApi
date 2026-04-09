@@ -3,7 +3,7 @@ package com.walmartapi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
+@Entity //representación de una tabla de BD en el código
 @Data
 @Table(name = "products")
 public class ProductEntity {

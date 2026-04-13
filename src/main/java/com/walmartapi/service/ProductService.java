@@ -20,12 +20,6 @@ public class ProductService {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
     }
-    public Product saveProduct(Product product) { //Mapear objetos es crear objetos a partir de información de otros objetos
-        ProductEntity newProduct = productMapper.mapToEntity(product);
-        ProductEntity saveEntity = productRepository.save(newProduct); //Objeto que va a regresar la aplicación después de conectarse a la BD
-
-        return productMapper.mapToDTO(saveEntity);
-    }
 
     public Product getProductById(Long id) {
         Optional<ProductEntity> product = productRepository.findById(id);
@@ -35,6 +29,32 @@ public class ProductService {
         }
 
         return productMapper.mapToDTO(product.get());
+    }
+
+    public Product saveProduct(Product product) { //Mapear objetos es crear objetos a partir de información de otros objetos
+        ProductEntity newProduct = productMapper.mapToEntity(product);
+        ProductEntity saveEntity = productRepository.save(newProduct); //Objeto que va a regresar la aplicación después de conectarse a la BD
+
+        return productMapper.mapToDTO(saveEntity);
+    }
+
+    public Product updateProduct(Long id,  Product product) {
+        if(productRepository.findById(id).isEmpty()) {
+            throw new NotFound("Product not found");
+        }
+            ProductEntity updateProduct = productMapper.mapToEntity(product);
+            updateProduct.setId(id);
+            ProductEntity updateEntity = productRepository.save(updateProduct);
+
+        return productMapper.mapToDTO(updateEntity);
+    }
+
+    public void deleteProduct(Long id){
+        if(productRepository.findById(id).isEmpty()) {
+            throw new NotFound("Product not found");
+        }
+
+        productRepository.deleteById(id);
     }
 
 }

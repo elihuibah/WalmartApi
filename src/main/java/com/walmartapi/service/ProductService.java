@@ -39,21 +39,16 @@ public class ProductService {
     }
 
     public Product updateProduct(Long id,  Product product) {
-        if(productRepository.findById(id).isEmpty()) {
-            throw new NotFound("Product not found");
-        }
-            ProductEntity updateProduct = productMapper.mapToEntity(product);
-            updateProduct.setId(id);
-            ProductEntity updateEntity = productRepository.save(updateProduct);
+        getProductById(id);
+        ProductEntity updateProduct = productMapper.mapToEntity(product);
+        updateProduct.setId(id);
+        ProductEntity updateEntity = productRepository.save(updateProduct);
 
         return productMapper.mapToDTO(updateEntity);
     }
 
     public void deleteProduct(Long id){
-        if(productRepository.findById(id).isEmpty()) {
-            throw new NotFound("Product not found");
-        }
-
+        getProductById(id);
         productRepository.deleteById(id);
     }
 
